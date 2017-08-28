@@ -24,7 +24,8 @@ def get_top_articles(amount=1):
     """
     sql = """SELECT articles.title, sum(top_articles.amount) AS amount 
                 FROM top_articles, articles 
-                WHERE top_articles.path LIKE concat('%/article/%',articles.slug)
+                WHERE top_articles.path 
+                LIKE concat('%/article/%',articles.slug)
                 GROUP BY articles.title 
                 ORDER BY amount DESC
                 LIMIT {};""".format(amount)
@@ -38,7 +39,8 @@ def get_authors_top():
     """
     sql = """SELECT authors.name, sum(top_articles.amount) AS amount
                 FROM top_articles, articles, authors  
-                WHERE top_articles.path LIKE concat('%/article/%',articles.slug)
+                WHERE top_articles.path 
+                LIKE concat('%/article/%',articles.slug)
                 AND authors.id = articles.author
                 GROUP BY authors.name 
                 ORDER BY amount DESC;"""
@@ -50,11 +52,13 @@ def get_errors():
 
     :return list:
     """
-    sql = """SELECT request_list.day, ROUND((error_list.errors/(request_list.requests/100))::DECIMAL, 2) AS percent
-                FROM request_list, error_list
-                WHERE request_list.day = error_list.day
-                AND (error_list.errors/(request_list.requests/100)) > 1
-                ORDER BY percent DESC;"""
+    sql = """SELECT request_list.day, 
+        ROUND((error_list.errors/(request_list.requests/100))::DECIMAL, 2) 
+        AS percent
+        FROM request_list, error_list
+        WHERE request_list.day = error_list.day
+        AND (error_list.errors/(request_list.requests/100)) > 1
+        ORDER BY percent DESC;"""
     return get_data(sql)
 
 
@@ -89,7 +93,8 @@ def errors():
     errors_list = get_errors()
     print("\nThe days when requests return more when 1 % errors:")
     for date, percent in errors_list:
-        day = datetime.strptime(str(date), '%Y-%M-%d').strftime('%B %d, %Y')
+        day = datetime.strptime(str(date), '%Y-%m-%d')
+        day = day.strftime('%B %d, %Y')
         print('\tDay: {} - {}% errors'.format(day, percent))
 
 
