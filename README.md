@@ -5,13 +5,12 @@ In this project complex SQL queries are used for generating the reports. These a
 - database: PostgreSQL
 - language: Python v3.6.1
 
-## Installation
+#### Preparation
 For installation you have to have: 
 - installed Python 3.5 version or more
 - installed PostgreSQL 9.6
-- uploaded in to PostgreSQL - [newsdata.sql](https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip)
+- uploaded into PostgreSQL - [newsdata.sql](https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip)
 
-#### Preparation
 In PostgreSQL create following VIEWS:
 ```
 CREATE OR REPLACE VIEW public.top_articles AS 
@@ -49,7 +48,8 @@ ALTER TABLE public.error_list
   OWNER TO postgres;
 ```
 > In file main.py change SETTINGS['db'] on your database name
-#### Installation with git
+## Installation
+
 In Git Bash put the following command:
 ```
 git clone "https://github.com/DudkinON/log_analytic"
@@ -61,4 +61,6 @@ pip install psycopg2
 python log_analytic/main.py
 ```
 
+## LICENSE
 
+MIT
